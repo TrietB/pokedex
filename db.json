@@ -4325,7 +4325,8 @@
       "name": "volcanion",
       "types": ["fire", "water"],
       "url": "http://localhost:5000/images/volcanion.png"
-    }
+    },
+    { "id": 722, "name": "triet", "types": ["grass", "poison"], "url": "wwww" }
   ],
   "totalPokemons": 721
 }

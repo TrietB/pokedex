@@ -101,7 +101,8 @@ router.post('/', (req,res,next)=> {
     "poison", "rock", "water"
     ]
   try {
-    const { name, id, url, types } = req.body
+    let { name, id, url, types } = req.body
+    id = parseInt(id)
     if(!name || !id || !url || !types){
       const exception = new Error('Missing body info')
       exception.statusCode = 401
@@ -125,7 +126,6 @@ router.post('/', (req,res,next)=> {
     })
 
 
-    console.log(newPokemon)
     let db = fs.readFileSync('db.json', 'utf-8')
     db=JSON.parse(db)
     const {data} = db
@@ -136,10 +136,22 @@ router.post('/', (req,res,next)=> {
         throw exception
       }
     })
-    const newPokemon = {id, name, types, url }
+    const newPokemon = { 
+      id, 
+      name, 
+      types, 
+      url 
+    }
+    console.log(newPokemon)
+    data.push(newPokemon)
+    db.data = data
+    db=JSON.stringify(db)
+    fs.writeFileSync('db.json', db)
+
     res.status(200).send({data:newPokemon})
   } catch (error) {
     res.status(500).json(error.message)
+    console.log(error.message)
     
   }
 })
